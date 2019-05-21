@@ -59,8 +59,15 @@ router.post('/', [
         user.password = await bcrypt.hash(password, salt)
         await user.save();
       // Return jsonwebtoken
-      res.send('User registered');
-
+      const payload = {
+        user: {
+          id: user.id
+        }
+      }
+      jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
+        if(err) throw err;
+        res.json({ token });
+      })
       } catch(err) {
         console.error(err.message);
         res.status(500).send('Server error');
@@ -68,7 +75,7 @@ router.post('/', [
     }
   );
 
-  
+
 // @route   POST /api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public

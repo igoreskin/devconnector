@@ -76,39 +76,6 @@ router.post('/', [
   );
 
 
-// @route   POST /api/users/login
-// @desc    Login User / Returning JWT Token
-// @access  Public
-router.post('/login', (req,res)  => {
-  const email = req.body.email;
-  const password = req.body.password;
-  // Find user by email
-  User.findOne({email})
-  .then(user => {
-    // Check for user
-    if(!user) {
-      return res.status(404).json({email: 'User not found'})
-    }
-    // Check Password
-    bcrypt.compare(password, user.password)
-    .then(isMatch => {
-      if(isMatch) {
-        // User matched
-        const payload = { id: user.id, name: user.name, avatar: user.avatar } // Create JWT Payload
-        // Sign Token
-        jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
-          res.json({
-            success: true,
-            token: 'Bearer ' + token
-          })
-        })
-      } else {
-        res.status(400).json({password: 'Password incorrect'});
-      }
-    })
-  })
-})
-
 // @route   GET /api/users/current
 // @desc    Return current user
 // @access  Private

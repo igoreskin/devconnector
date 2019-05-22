@@ -47,7 +47,7 @@ router.post('/', [
           r: 'pg', // Rating
           d: 'mm' // Default
         })
-
+        // Create new user
         user = new User({
           name,
           email,
@@ -64,7 +64,7 @@ router.post('/', [
           id: user.id
         }
       }
-      jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
+      jwt.sign(payload, keys.secretOrKey, {expiresIn: 36000}, (err, token) => {
         if(err) throw err;
         res.json({ token });
       })

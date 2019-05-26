@@ -147,7 +147,7 @@ router.put('/experience', [auth, [
   const { title, company, location, from, to, current, description } = req.body;
 
   const newExp = { title, company, location, from, to, current, description }
-  // the same as title = title, etc.It creates an object with the data that user submits
+  // the same as title = title, etc. It creates an object with the data that user submits
   try {
     const profile = await Profile.findOne({ user: req.user.id });
     profile.experience.unshift(newExp);
@@ -198,7 +198,7 @@ router.put('/education', [auth, [
   const { school, degree, fieldofstudy, from, to, current, description } = req.body;
 
     const newEdu = { school, degree, fieldofstudy, from, to, current, description }
-  // the same as title = title, etc.It creates an object with the data that user submits
+  // the same as title = title, etc. It creates an object with the data that user submits
   try {
     const profile = await Profile.findOne({ user: req.user.id });
     profile.education.unshift(newEdu);
@@ -225,7 +225,7 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
     res.json(profile);
 
   } catch (err) {
-    onsole.error(err.message);
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const Register = ({ setAlert }) => {    // instead of props, to use setAlert instead of props.setAlert hereafter
 
-  const[formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',

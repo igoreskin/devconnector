@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
     case REGISTER_SUCCESS: 
     case AUTH_ERROR:
       console.log(payload);
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem('token', payload);
       return { ...state, ...payload, isAuthenticated: true, loading: false }
     case REGISTER_FAIL: 
       localStorage.removeItem('token');

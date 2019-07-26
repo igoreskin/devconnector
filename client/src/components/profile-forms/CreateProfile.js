@@ -73,7 +73,7 @@ const CreateProfile = ({ createProfile, history }) => {
           <small className="form-text">Could be your own company or one you work for</small>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Website" name="website" value="website" onChange={e => onChange(e)} />
+          <input type="text" placeholder="Website" name="website" value={website} onChange={e => onChange(e)} />
           <small className="form-text">Could be your own or a company website</small>
         </div>
         <div className="form-group">

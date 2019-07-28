@@ -38,17 +38,18 @@ export const createProfile = (formData, history, edit = false) => async dispatch
       payload: res.data
     });
 
-    dispatch(setAlert(edit? 'Profile Updated' : 'Profile Created'))
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success')) // this is how to dispatch an action from another action creator 
 
     if(!edit) {
-      history.push('/dashboard'); // this will redirect to the dashboard
+      history.push('/dashboard'); // this will redirect to the dashboard after creating a new profile
     }
     
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.message, 'danger')));
+      console.log(errors)
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({

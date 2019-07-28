@@ -1,10 +1,10 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom'; //withRouter is necessary to import for using history in profileActions
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profileActions';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 
-const CreateProfile = ({ createProfile, history }) => {
+const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentProfile, history }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -21,6 +21,25 @@ const CreateProfile = ({ createProfile, history }) => {
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false); // like a property in the state with a boolean value 
+
+  useEffect(() => {
+    getCurrentProfile();
+
+    setFormData({
+      company: loading || !profile.company ? '' : profile.company,
+      website: loading || !profile.website ? '' : profile.website,
+      location: loading || !profile.location ? '' : profile.location,
+      status: loading || !profile.status ? '' : profile.status,
+      skills: loading || !profile.skills ? '' : profile.skills.join(', '),
+      githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
+      bio: loading || !profile.bio ? '' : profile.bio,
+      twitter: loading || !profile.social ? '' : profile.social.twitter,
+      facebook: loading || !profile.social ? '' : profile.social.facebook,
+      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
+      youtube: loading || !profile.social ? '' : profile.social.youtube,
+      instagram: loading || !profile.social ? '' : profile.social.instagram
+    })
+  }, [loading]); // the condition in the brackets makes sure that the useEffect hook only runs when loading 
 
   const {
     company,
@@ -44,7 +63,7 @@ const CreateProfile = ({ createProfile, history }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history)
+    createProfile(formData, history, true) // true means the edit argument 
   }
 
   return (
@@ -56,7 +75,7 @@ const CreateProfile = ({ createProfile, history }) => {
         <i className="fas fa-user"></i> Let's get some information to make your profile stand out
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit = {e => onSubmit(e)}>
+      <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>
@@ -103,7 +122,7 @@ const CreateProfile = ({ createProfile, history }) => {
 
         <div className="my-2">
           {/* To toggle the boolean value of displaySocialInputs: */}
-          <button onClick={() => toggleSocialInputs(!displaySocialInputs)} type="button" className="btn btn-light"> 
+          <button onClick={() => toggleSocialInputs(!displaySocialInputs)} type="button" className="btn btn-light">
             Add Social Network Links
           </button>
           <span>Optional</span>
@@ -134,9 +153,9 @@ const CreateProfile = ({ createProfile, history }) => {
             <i className="fab fa-instagram fa-2x"></i>
             <input type="text" placeholder="Instagram URL" name="instagram" value={instagram} onChange={e => onChange(e)} />
           </div>
-        </Fragment> }
+        </Fragment>}
 
-        
+
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
       </form>
@@ -144,10 +163,14 @@ const CreateProfile = ({ createProfile, history }) => {
   )
 }
 
-CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => ({
+  profile: state.profile
+});
 
-
-export default connect(null, { createProfile })(withRouter(CreateProfile)); // withRouter to be able to use the history object in the action creator
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(EditProfile)); // withRouter to be able to use the history object in the action creator

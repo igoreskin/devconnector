@@ -39,7 +39,8 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram
     })
-  }, [loading]); // the condition in the brackets makes sure that the useEffect hook only runs when loading 
+    // eslint-disable-next-line
+  }, [loading, getCurrentProfile]); // the condition in the brackets makes sure that the useEffect hook only runs when loading 
 
   const {
     company,

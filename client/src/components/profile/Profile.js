@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
+import ProfileTop from './ProfileTop';
 import { getProfileById } from '../../actions/profileActions';
 
 const Profile = ({ getProfileById, profile: { profile, loading }, auth, match }) => {  // props.match.params.id retrieves the id from the url 
@@ -16,6 +17,9 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth, match })
         <Link to='/profiles' className="btn btn-light">Back To Profiles</Link>
         {auth.isAuthenticated && auth.loading === false && auth.user._id === profile.user._id && 
           (<Link to='/edit-profile' className="btn btn-dark">Edit Profile</Link>)}
+        <div class="profile-grid my-1">
+          <ProfileTop profile={profile} />
+        </div>
       </Fragment>}
     </Fragment>
   )

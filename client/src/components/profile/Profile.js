@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
 import { getProfileById } from '../../actions/profileActions';
 
 const Profile = ({ getProfileById, profile: { profile, loading }, auth, match }) => {  // props.match.params.id retrieves the id from the url 
@@ -19,6 +20,7 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth, match })
           (<Link to='/edit-profile' className="btn btn-dark">Edit Profile</Link>)}
         <div class="profile-grid my-1">
           <ProfileTop profile={profile} />
+          <ProfileAbout profile={profile} />
         </div>
       </Fragment>}
     </Fragment>

@@ -19,13 +19,6 @@ const ProfileAbout = ({ profile: {
         {skills.map((skill, index) => (
           <div class="p-1" key={index}><i class="fas fa-check"></i> {skill}</div>
         ))}
-
-
-        {/* <div class="p-1"><i class="fa fa-check"></i> HTML</div>
-        <div class="p-1"><i class="fa fa-check"></i> CSS</div>
-        <div class="p-1"><i class="fa fa-check"></i> JavaScript</div>
-        <div class="p-1"><i class="fa fa-check"></i> Python</div>
-        <div class="p-1"><i class="fa fa-check"></i> C#</div> */}
       </div>
     </div>
   )

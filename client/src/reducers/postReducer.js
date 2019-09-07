@@ -1,4 +1,4 @@
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST } from '../actions/types';
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES, DELETE_POST, ADD_POST } from '../actions/types';
 
 const initialState = {
   posts: [],
@@ -13,6 +13,8 @@ export default function(state = initialState, action) {
   switch(type) {
     case GET_POSTS:
       return { ...state, posts: payload, loading: false };
+    case ADD_POST:
+      return { ...state, posts: [payload, ...state.posts ], loading: false } // to make the latest post appear on top
     case DELETE_POST:
       return { ...state, posts: state.posts.filter(post => post._id !== payload), loading: false }
     case POST_ERROR:
